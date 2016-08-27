@@ -1,7 +1,6 @@
 #-------Event scheduler object creation--------#
 set ns [new Simulator]
 #---Open the Trace files---#
-
 set file1 [open Tcpred4.tr w]
 $ns trace-all $file1
 #--Open the NAM trace file----#
@@ -31,15 +30,9 @@ $ns duplex-link $n1 $n5 2Mb 1ms DropTail
 # $ns simplex-link-op $n3 $n2 orient left
 # $ns duplex-link-op $n3 $n4 orient right-up
 # $ns duplex-link-op $n3 $n5 orient right-down
-
- 
-
 #Set Queue Size of link (n2-n3) to 10
-
 # $ns queue-limit $n2 $n3 20
-
 #Setup a TCP connection
-
 # set tcp [new Agent/TCP/Newreno]
 # $ns attach-agent $n0 $tcp
 # set sink [new Agent/TCPSink/DelAck]
@@ -53,34 +46,24 @@ $ns duplex-link $n1 $n5 2Mb 1ms DropTail
 # set ftp [new Application/FTP]
 # $ftp attach-agent $tcp
 # $ftp set type_ FTP
-
- 
-
 #Setup a UDP connection
-
 set udp [new Agent/UDP]
 $ns attach-agent $n1 $udp
 set null [new Agent/Null]
 $ns attach-agent $n5 $null
 $ns connect $udp $null
 $udp set fid_ 2
-
 #Setup a CBR over UDP connection
-
 set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 # $cbr set type_ CBR
 # $cbr set packet_size_ 1000
 # $cbr set rate_ 0.01mb
 # $cbr set random_ false
-
 $ns at 0.1 "$cbr start"
 # $ns at 1.0 "$ftp start"
 # $ns at 10.0 "$ftp stop"
 $ns at 10.5 "$cbr stop"
-
- 
-
 #Define a 'finish' procedure
 
 proc finish {} {
